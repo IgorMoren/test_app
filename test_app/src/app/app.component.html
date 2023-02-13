@@ -1,0 +1,70 @@
+<h1 style="text-align: center">Prueba técnica:</h1>
+
+<mat-divider></mat-divider>
+
+<div class="container" fxLayout="column">
+  <div
+    fxLayout="row wrap"
+    fxLayout.xs="column"
+    fxLayoutAlign="center"
+    fxLayoutGap="20px"
+  >
+    <form [formGroup]="myIdForm" fxLayoutGap="20px" (submit)="filterById()">
+      <mat-form-field appearance="fill">
+        <mat-label>Enter the ID</mat-label>
+        <input
+          matInput
+          formControlName="id"
+          type="number"
+          placeholder="1"
+          required
+        />
+        <mat-error>Must have a value</mat-error>
+      </mat-form-field>
+      <button mat-raised-button [disabled]="!myIdForm.valid">
+        Filter by id
+      </button>
+    </form>
+    <form [formGroup]="myTextForm" fxLayoutGap="20px">
+      <mat-form-field appearance="fill">
+        <mat-label>Enter the text</mat-label>
+        <input
+          matInput
+          formControlName="text"
+          type="text"
+          placeholder="ex: ea"
+          required
+        />
+        <mat-error>Must have a value</mat-error>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        (click)="filterByText()"
+        [disabled]="!myTextForm.valid"
+      >
+        Filter by text
+      </button>
+    </form>
+  </div>
+  <div fxlayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+    <button mat-raised-button color="accent" (click)="reset()">Reset</button>
+  </div>
+</div>
+
+<div
+  infinite-scroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="1000"
+  (scrolled)="onScroll()"
+  fxLayout="row wrap"
+  fxLayout.xs="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="20px"
+>
+  <div fxFlex="20" fxFlex.lg="15" fxFlex.sm="30" *ngFor="let card of cards">
+    <app-card [card]="card"></app-card>
+  </div>
+</div>
+<div fxlayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+  <div *ngIf="noData">No data</div>
+</div>
